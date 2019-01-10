@@ -151,6 +151,10 @@ class RestApiRequestDispatcher {
       request_chunk = req->ReadRequestBytes(&num_bytes);
     }
 
+
+
+    auto request_start_time = std::chrono::high_resolution_clock::now();
+
     std::vector<std::pair<string, string>> headers;
     string output;
     VLOG(1) << "Processing HTTP request: " << req->http_method() << " "
@@ -168,6 +172,11 @@ class RestApiRequestDispatcher {
       VLOG(1) << "Error Processing HTTP/REST request: " << req->http_method()
               << " " << req->uri_path() << " Error: " << status.ToString();
     }
+
+    LOG(INFO) << "Completed HTTP request in  " 
+              << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now()-request_start_time).count();
+              << " seconds."
+
     req->ReplyWithStatus(http_status);
   }
 
