@@ -175,7 +175,7 @@ class RestApiRequestDispatcher {
 
     LOG(INFO) << "Completed HTTP request in  " 
               << std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now()-request_start_time).count()
-              << " seconds."
+              << " seconds.";
 
     req->ReplyWithStatus(http_status);
   }
